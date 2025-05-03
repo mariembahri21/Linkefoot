@@ -1,0 +1,18 @@
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+
+# Ignore environment files
+.env
+.venv/
+env/
+venv/
+*.env
+
+# Ignore logs
+*.log
+
+# Ignore Excel files you don't want to upload
+data/raw/*.xlsx
+*.xls
+
