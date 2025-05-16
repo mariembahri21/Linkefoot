@@ -18,13 +18,12 @@ def scrape_best_and_worst_form():
             browser.close()
             return None, None
 
-        # Accepter les cookies
+      
         try:
             page.click("text=AGREE", timeout=3000)
         except:
             pass
 
-        # Fonction pour scraper un tableau "Form"
         def scrape_form_table():
             rows_data = []
             nonlocal columns
@@ -73,21 +72,21 @@ def scrape_best_and_worst_form():
 
             return rows_data
 
-        # Scraper la "Best Form" (onglet par défaut)
+     
         print("[Info] Scraping 'Best Form'...")
         best_rows = scrape_form_table()
 
-        # Aller à l'onglet "Worst"
+   
         try:
             print("[Info] Passage à l'onglet 'Worst Form'...")
-            page.click("#forms-tab > li:nth-child(2) > a")  # Onglet Worst
+            page.click("#forms-tab > li:nth-child(2) > a") 
             page.wait_for_timeout(2000)
         except Exception as e:
             print(f"[Erreur] Impossible de cliquer sur l'onglet Worst : {e}")
             browser.close()
             return pd.DataFrame(best_rows, columns=columns), None
 
-        # Scraper la "Worst Form"
+      
         print("[Info] Scraping 'Worst Form'...")
         worst_rows = scrape_form_table()
 
@@ -96,7 +95,7 @@ def scrape_best_and_worst_form():
     df_best_form = pd.DataFrame(best_rows, columns=columns)
     df_worst_form = pd.DataFrame(worst_rows, columns=columns)
 
-    # Sauvegarde dans un fichier Excel avec deux feuilles
+
     output_file = "team_forms.xlsx"
     with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
         df_best_form.to_excel(writer, sheet_name='Best Form', index=False)
@@ -126,9 +125,7 @@ def scrape_best_and_worst_teams_performance():
         try:
             page.click("text=AGREE", timeout=3000)
         except:
-            pass  # Cookie déjà accepté ou pas présent
-
-        # Fonction pour scraper un tableau donné
+            pass  
         def scrape_table():
             rows_data = []
             try:
@@ -166,21 +163,20 @@ def scrape_best_and_worst_teams_performance():
                         break
             return rows_data
 
-        # Scraper le tableau "Best"
+   
         print("[Info] Scraping du tableau 'Best' en cours...")
         best_rows = scrape_table()
 
-        # Aller vers l'onglet "Worst"
+
         try:
             print("[Info] Passage à l'onglet 'Worst'...")
-            page.click("#performances-type > li:nth-child(2) > a")  # Worst tab
+            page.click("#performances-type > li:nth-child(2) > a")  
             page.wait_for_timeout(2000)
         except Exception as e:
             print(f"[Erreur] Impossible de cliquer sur 'Worst' : {e}")
             browser.close()
             return pd.DataFrame(best_rows, columns=columns), None
 
-        # Scraper le tableau "Worst"
         print("[Info] Scraping du tableau 'Worst' en cours...")
         worst_rows = scrape_table()
 
@@ -189,7 +185,7 @@ def scrape_best_and_worst_teams_performance():
     df_best_form = pd.DataFrame(best_rows, columns=columns)
     df_worst_form = pd.DataFrame(worst_rows, columns=columns)
 
-    # Sauvegarde dans un fichier Excel avec deux feuilles
+ 
     output_file = "teams_pefrormnace.xlsx"
     with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
         df_best_form.to_excel(writer, sheet_name='Best Performance', index=False)
@@ -210,7 +206,7 @@ def scrape_teams_statistics():
 
         page.goto("https://www.whoscored.com/statistics", wait_until="domcontentloaded", timeout=60000)
 
-        # Accepter les cookies
+      
         try:
             page.click("text=AGREE")
         except:
@@ -222,10 +218,10 @@ def scrape_teams_statistics():
         except:
             pass
 
-        # Navigation vers les joueurs
+ 
         page.wait_for_selector("#top-team-stats-summary")
 
-        # Récupération des en-têtes
+   
         headers = page.query_selector_all("#top-team-stats-summary-grid > thead > tr")
         columns = [header.inner_text().strip() for header in headers[0].query_selector_all("th")]
 
@@ -244,7 +240,6 @@ def scrape_teams_statistics():
 
         browser.close()
     df= pd.DataFrame(all_rows, columns=columns)
-    # Sauvegarde dans un fichier Excel avec deux feuilles
     output_file = "teams_stats.xlsx"
     with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
         df.to_excel(writer, index=False)

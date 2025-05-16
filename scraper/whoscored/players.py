@@ -12,16 +12,15 @@ def scrape_ligue1_players():
 
         page.goto("https://www.whoscored.com/statistics", wait_until="domcontentloaded", timeout=60000)
 
-        # Accepter les cookies
+       
         try:
             page.click("text=AGREE")
         except:
             pass
 
-        # Navigation vers les joueurs
+        
         page.wait_for_selector("#statistics-table-summary")
 
-        # Récupération des en-têtes
         headers = page.query_selector_all("#player-table-statistics-head > tr")
         columns = [header.inner_text().strip() for header in headers[0].query_selector_all("th")]
 
@@ -48,7 +47,7 @@ async def scrape_whoscored_player_stats():
         page = await browser.new_page()
         await page.goto("https://www.whoscored.com/statistics", wait_until="domcontentloaded", timeout=60000)
 
-        # Accepter les cookies si le bouton existe
+       
         try:
             await page.click("text=AGREE", timeout=5000)
         except:
@@ -78,7 +77,7 @@ async def scrape_whoscored_player_stats():
                     all_data.append(row_data)
 
             try:
-                # Utiliser le bon bouton "Next" par son conteneur unique
+             
                 next_locator = page.locator("#statistics-paging-summary #next")
 
                 if await next_locator.count() == 0:
@@ -92,7 +91,7 @@ async def scrape_whoscored_player_stats():
                     
                 await page.wait_for_selector("#statistics-table-summary-loading", state="hidden", timeout=10000)
 
-                # Scroll dans le champ de vision
+              
                 try:
                     await next_locator.scroll_into_view_if_needed()
                 except:
@@ -103,7 +102,6 @@ async def scrape_whoscored_player_stats():
                 except Exception as click_error:
                     print("⚠️ Obstacle détecté lors du clic, tentative de suppression...")
 
-                    # Supprimer des overlays pub s'ils bloquent
                     try:
                         ad_overlay = page.locator("#sn_gg_ad_wrapper, .popup-close, .overlay, .loading-spinner-container-shade")
                         if await ad_overlay.is_visible():
@@ -112,7 +110,7 @@ async def scrape_whoscored_player_stats():
                     except:
                         pass
 
-                    # Réessayer le clic
+                   
                     await next_locator.click()
 
                 await page.wait_for_timeout(2000)
@@ -124,11 +122,11 @@ async def scrape_whoscored_player_stats():
 
         await browser.close()
 
-        # ✅ Création du DataFrame
+     
         df = pd.DataFrame(all_data, columns=columns)
         print(f"✅ {len(df)} lignes collectées")
 
-        # ✅ Sauvegarde Excel
+      
         excel_file = "player_statistics.xlsx"
         df.to_excel(excel_file, index=False, engine="openpyxl")
         print(f"📁 Données sauvegardées dans '{excel_file}'")
