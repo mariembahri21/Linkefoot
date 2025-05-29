@@ -13,6 +13,7 @@ venv/
 *.log
 
 # Ignore Excel files you don't want to upload
-data/raw/*.xlsx
+*.xlsx
 *.xls
+
 

@@ -1,0 +1,153 @@
+================================================================================
+📁 File Name: sofifa_players.xlsx
+--------------------------------------------------------------------------------
+✅ Shape: (18860, 52)
+
+⚠️ Issues in column names:
+- `Overall rating`: contains spaces
+- `Team & Contract`: contains spaces
+- `Best overall`: contains spaces
+- `Best position`: contains spaces
+- `Total attacking`: contains spaces
+- `Heading accuracy`: contains spaces
+- `Short passing`: contains spaces
+- `Total skill`: contains spaces
+- `FK Accuracy`: contains spaces
+- `Long passing`: contains spaces
+- `Ball control`: contains spaces
+- `Total movement`: contains spaces
+- `Sprint speed`: contains spaces
+- `Total power`: contains spaces
+- `Shot power`: contains spaces
+- `Long shots`: contains spaces
+- `Total mentality`: contains spaces
+- `Total defending`: contains spaces
+- `Defensive awareness`: contains spaces
+- `Standing tackle`: contains spaces
+- `Sliding tackle`: contains spaces
+- `Total goalkeeping`: contains spaces
+- `Total stats`: contains spaces
+- `Base stats`: contains spaces
+- `Weak foot`: contains spaces
+- `Skill moves`: contains spaces
+- `International reputation`: contains spaces
+- `Body type`: contains spaces
+- `Picture URL`: contains spaces
+
+🧐 Rows matching headers: 0
+🔁 Duplicated rows: 0
+
+❓ Missing values (%):
+- `Name`: 0 missing (0.0%)
+- `Age`: 0 missing (0.0%)
+- `Overall rating`: 0 missing (0.0%)
+- `Potential`: 0 missing (0.0%)
+- `Team & Contract`: 0 missing (0.0%)
+- `ID`: 0 missing (0.0%)
+- `Height`: 0 missing (0.0%)
+- `Weight`: 0 missing (0.0%)
+- `foot`: 0 missing (0.0%)
+- `Best overall`: 0 missing (0.0%)
+- `Best position`: 0 missing (0.0%)
+- `Joined`: 0 missing (0.0%)
+- `Value`: 0 missing (0.0%)
+- `Wage`: 0 missing (0.0%)
+- `Total attacking`: 0 missing (0.0%)
+- `Crossing`: 0 missing (0.0%)
+- `Finishing`: 0 missing (0.0%)
+- `Heading accuracy`: 0 missing (0.0%)
+- `Short passing`: 0 missing (0.0%)
+- `Total skill`: 0 missing (0.0%)
+- `Dribbling`: 0 missing (0.0%)
+- `Curve`: 0 missing (0.0%)
+- `FK Accuracy`: 0 missing (0.0%)
+- `Long passing`: 0 missing (0.0%)
+- `Ball control`: 0 missing (0.0%)
+- `Total movement`: 0 missing (0.0%)
+- `Acceleration`: 0 missing (0.0%)
+- `Sprint speed`: 0 missing (0.0%)
+- `Agility`: 0 missing (0.0%)
+- `Reactions`: 0 missing (0.0%)
+- `Balance`: 0 missing (0.0%)
+- `Total power`: 0 missing (0.0%)
+- `Shot power`: 0 missing (0.0%)
+- `Jumping`: 0 missing (0.0%)
+- `Stamina`: 0 missing (0.0%)
+- `Strength`: 0 missing (0.0%)
+- `Long shots`: 0 missing (0.0%)
+- `Total mentality`: 0 missing (0.0%)
+- `Aggression`: 0 missing (0.0%)
+- `Penalties`: 0 missing (0.0%)
+- `Total defending`: 0 missing (0.0%)
+- `Defensive awareness`: 0 missing (0.0%)
+- `Standing tackle`: 0 missing (0.0%)
+- `Sliding tackle`: 0 missing (0.0%)
+- `Total goalkeeping`: 0 missing (0.0%)
+- `Total stats`: 0 missing (0.0%)
+- `Base stats`: 0 missing (0.0%)
+- `Weak foot`: 0 missing (0.0%)
+- `Skill moves`: 0 missing (0.0%)
+- `International reputation`: 0 missing (0.0%)
+- `Body type`: 0 missing (0.0%)
+- `Picture URL`: 0 missing (0.0%)
+
+📦 Column Data Types:
+Name                        object
+Age                          int64
+Overall rating              object
+Potential                   object
+Team & Contract             object
+ID                           int64
+Height                      object
+Weight                      object
+foot                        object
+Best overall                 int64
+Best position               object
+Joined                      object
+Value                       object
+Wage                        object
+Total attacking              int64
+Crossing                    object
+Finishing                   object
+Heading accuracy            object
+Short passing               object
+Total skill                  int64
+Dribbling                   object
+Curve                       object
+FK Accuracy                 object
+Long passing                object
+Ball control                object
+Total movement               int64
+Acceleration                object
+Sprint speed                object
+Agility                     object
+Reactions                   object
+Balance                     object
+Total power                  int64
+Shot power                  object
+Jumping                     object
+Stamina                     object
+Strength                    object
+Long shots                  object
+Total mentality              int64
+Aggression                  object
+Penalties                   object
+Total defending              int64
+Defensive awareness         object
+Standing tackle             object
+Sliding tackle              object
+Total goalkeeping            int64
+Total stats                  int64
+Base stats                   int64
+Weak foot                    int64
+Skill moves                  int64
+International reputation     int64
+Body type                   object
+Picture URL                 object
+dtype: object
+
+🧪 Text issues summary:
+- Rows with diacritics: **5468**
+- Rows with mixed characters: **150376**
+- Rows with extra spaces: **0**
+- Rows with suspicious characters: **54981**
