@@ -1,0 +1,76 @@
+import asyncio
+from playwright.async_api import async_playwright
+import pandas as pd
+
+async def scrape_sofascore_table():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=False)
+        page = await browser.new_page()
+        await page.goto(
+            "https://www.sofascore.com/tournament/football/france/ligue-1/34#id:61736",
+            wait_until="domcontentloaded"
+        )
+
+        await page.wait_for_selector("table tbody")
+
+        all_data = []
+
+        while True:
+            await page.wait_for_selector("table tbody")
+            rows = await page.query_selector_all("table tbody tr")
+
+            for row in rows:
+                cells = await row.query_selector_all("td")
+
+                if len(cells) < 10:
+                    continue
+
+                try:
+                    team_logo = await cells[1].query_selector("img")
+                    team = await team_logo.get_attribute("alt") if team_logo else "N/A"
+
+                    player_data = {
+                        "ID": await cells[0].inner_text(),
+                        "Team": team,
+                        "Name": await cells[2].inner_text(),
+                        "Goals": await cells[3].inner_text(),
+                        "Expected goals (xG)": await cells[4].inner_text(),
+                        "Successful dribbles": await cells[5].inner_text(),
+                        "Tackles": await cells[6].inner_text(),
+                        "Assists": await cells[7].inner_text(),
+                        "Accurate passes %": await cells[8].inner_text(),
+                        "Average SofaScore rating": await cells[9].inner_text(),
+                    }
+                    all_data.append(player_data)
+                except Exception as e:
+                    print(f"Skipping row due to error: {e}")
+
+            try:
+                next_button = await page.query_selector(
+                    "#__next > main > div > div.fresnel-container.fresnel-greaterThanOrEqual-mdMin.fresnel-\\:r1\\: > div > div.d_flex.flex-wrap_wrap.gap_xl.mdOnly\\:gap_md > div.d_flex.flex-d_column.mdDown\\:flex-sh_1.mdDown\\:flex-b_100\\%.gap_md.w_\\[0px\\].flex-g_2 > div.Box.klGMtt > div > div.TabPanel.bpHovE > div > div > button:nth-child(3)"
+                )
+                if next_button and await next_button.is_enabled():
+                    await next_button.click()
+                    await page.wait_for_timeout(2000)
+                else:
+                    break
+            except Exception as e:
+                print(f"Pagination ended or failed: {e}")
+                break
+
+        await browser.close()
+
+        # Create DataFrame
+        df = pd.DataFrame(all_data)
+
+        # Clean: Replace empty strings, None, and NaN with "0"
+        df.replace(["", None], "0", inplace=True)
+        df.fillna("0", inplace=True)
+
+        # Save to Excel
+        df.to_excel("ligue1_players.xlsx", index=False)
+        print("Data scraped and cleaned.")
+        print(df)
+
+# Run the script
+asyncio.run(scrape_sofascore_table())

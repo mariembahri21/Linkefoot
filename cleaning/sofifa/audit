@@ -4,7 +4,7 @@ import unicodedata
 import os
 
 # === Configuration ===
-FILE_PATH = 'data/raw/sofifa/sofifa_players.xlsx'  # Remplace par le nom de ton fichier
+FILE_PATH = 'data/cleaned/sofascore/bundesliga/bundesliga_players.xlsx'  # Remplace par le nom de ton fichier
 LOG_PATH = 'cleaning\sofifa\logs\players_audit_report.txt'  # Chemin du fichier de log
 os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
 

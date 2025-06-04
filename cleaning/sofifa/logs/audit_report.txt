@@ -1,0 +1,41 @@
+================================================================================
+📁 File Name: bundesliga_players.xlsx
+--------------------------------------------------------------------------------
+✅ Shape: (481, 9)
+
+⚠️ Issues in column names:
+- `Expected goals (xG)`: contains spaces
+- `Successful dribbles`: contains spaces
+- `Accurate passes %`: contains spaces
+
+🧐 Rows matching headers: 0
+🔁 Duplicated rows: 0
+
+❓ Missing values (%):
+- `ID`: 0 missing (0.0%)
+- `Team`: 0 missing (0.0%)
+- `Name`: 0 missing (0.0%)
+- `Goals`: 0 missing (0.0%)
+- `Expected goals (xG)`: 0 missing (0.0%)
+- `Successful dribbles`: 0 missing (0.0%)
+- `Tackles`: 0 missing (0.0%)
+- `Assists`: 0 missing (0.0%)
+- `Accurate passes %`: 0 missing (0.0%)
+
+📦 Column Data Types:
+ID                       int64
+Team                    object
+Name                    object
+Goals                    int64
+Expected goals (xG)    float64
+Successful dribbles      int64
+Tackles                  int64
+Assists                  int64
+Accurate passes %      float64
+dtype: object
+
+🧪 Text issues summary:
+- Rows with diacritics: **121**
+- Rows with mixed characters: **128**
+- Rows with extra spaces: **1**
+- Rows with suspicious characters: **0**
