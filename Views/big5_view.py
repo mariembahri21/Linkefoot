@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 def load_big5_data():
-    file_path = os.path.join("data/cleaned/sofascore/Big5.xlsx")
+    file_path = os.path.join("data/cleaned/sofascore/sofascore_leagues.xlsx")
     return pd.read_excel(file_path)
 
 def display_big5_card(league):

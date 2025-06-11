@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 def load_players_data():
-    file_path = os.path.join("data\cleaned\sofascore\players.xlsx")
+    file_path = os.path.join("data/cleaned/sofascore/sofascore_preprocessed_teams_players.xlsx")
     return pd.read_excel(file_path)
 
 def display_player_card(player):
@@ -11,12 +11,12 @@ def display_player_card(player):
         f"""
         <div style='background-color:#1e1e1e;padding:1em;margin:1em 0;border-radius:12px;box-shadow: 0 4px 12px rgba(0,0,0,0.4);color:white;'>
             <div style='display: flex; gap: 1em; align-items: center;'>
-                <img src="{player['Picture']}" style='width:90px;height:90px;border-radius:12px;object-fit: cover; border: 2px solid #555;' />
+                <img src="{player['picture']}" style='width:90px;height:90px;border-radius:12px;object-fit: cover; border: 2px solid #555;' />
                 <div>
-                    <h3 style='margin: 0;'>{player['Name']}</h3>
-                    <p style='margin: 0.25em 0;'>🏷️ League: {player['League']}</p>
-                    <p style='margin: 0.25em 0;'>🏟️ Team: {player['Team']}</p>
-                    <p style='margin: 0.25em 0;'>⚽ Goals: {player['Goals']}</p>
+                    <h3 style='margin: 0;'>{player['name']}</h3>
+                    <p style='margin: 0.25em 0;'>🏷️ League: {player['league']}</p>
+                    <p style='margin: 0.25em 0;'>🏟️ Team: {player['team']}</p>
+                    <p style='margin: 0.25em 0;'>⚽ Goals: {player['p_goals']}</p>
                 </div>
             </div>
         </div>

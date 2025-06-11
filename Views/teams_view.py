@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 def load_teams_data():
-    file_path = os.path.join("data/cleaned/sofifa/sofifa_teams_clnd.xlsx")
+    file_path = os.path.join("data/cleaned/sofifa/sofifa_teams_cleaned.xlsx")
     return pd.read_excel(file_path)
 
 def display_team_card(team):
@@ -13,11 +13,11 @@ def display_team_card(team):
         <div style='display: flex; gap: 1em; align-items: center;
                     background-color: #1e1e1e; padding: 1em; margin: 1em 0;
                     border-radius: 12px; color: white;'>
-            <img src="{team['Picture_URL']}" style='width:80px;height:80px;border-radius: 50%; object-fit: cover;' />
+            <img src="{team['picture']}" style='width:80px;height:80px;border-radius: 50%; object-fit: cover;' />
             <div>
-            <strong>{team['Team']}</strong><br>
-            League: {team['League']}<br>
-            Titles won: 🏆 {team['Titles_won']}
+            <strong>{team['team']}</strong><br>
+            League: {team['league']}<br>
+            Titles won: 🏆 {team['titles_won']}
         </div>
         """,
         unsafe_allow_html=True,
@@ -30,7 +30,7 @@ def display():
 
     search = st.text_input("🔎 Rechercher une équipe")
     if search:
-        df = df[df["Team"].str.contains(search, case=False, na=False)]
+        df = df[df["team"].str.contains(search, case=False, na=False)]
 
     page_size = 10
     if "team_page" not in st.session_state:

@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 def load_leagues_data():
-    file_path = os.path.join("data/cleaned/sofifa/sofifa_leagues_clnd.xlsx")
+    file_path = os.path.join("data/cleaned/sofifa/sofifa_leagues_cleaned.xlsx")
     return pd.read_excel(file_path)
 
 def display_league_card(league):
@@ -14,11 +14,11 @@ def display_league_card(league):
         <div style='display: flex; gap: 1em; align-items: center;
                     background-color: #1e1e1e; padding: 1em; margin: 1em 0;
                     border-radius: 12px; color: white;'>
-            <img src="{league['Picture_URL']}" style='width:80px;height:80px;border-radius: 50%; object-fit: cover;' />
+            <img src="{league['picture']}" style='width:80px;height:80px;border-radius: 50%; object-fit: cover;' />
             <div>
-            <strong>{league['League']}</strong><br>
-            Country: {league['Country']}<br>
-            Rank: {league['Rank']}
+            <strong>{league['league']}</strong><br>
+            Country: {league['country']}<br>
+            Rank: {league['rank']}
         </div>
         """,
         unsafe_allow_html=True,

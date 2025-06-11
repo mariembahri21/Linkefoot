@@ -1,43 +1,55 @@
-# players_view.py
-
 import streamlit as st
 import pandas as pd
 import os
 
 def load_players_data():
-    file_path = os.path.join("data/cleaned/sofifa/sofifa_players_clnd.xlsx")
+    file_path = os.path.join("data/cleaned/sofifa/sofifa_players_cleaned.xlsx")
     return pd.read_excel(file_path)
 
 def display_player_card(player):
-    player_name = player['Name']
-    st.markdown(
-        f"""
-        <div style='background-color:#1e1e1e;padding:1em;margin:0.5em 0;border-radius:10px;color:white;'>
-            <img src="{player['Picture_URL']}" width="100" style="border-radius: 10px;" />
-            <h4>{player_name}</h4> Age: {player['Age']} ans<br>
-            Club: {player['Team']}<br>
-            Position: {player['Positions']}<br>
-            Goals: {player['Goals']}<br>
-            Assists: {player['Assists']}<br>
-            Age: {player['Age']} ans<br>
-            Rating: ⭐ {player['Overall_rating']}<br>
-            <a href="?page=player_profile&name={player_name}" style="color:#00b4d8;">Voir le profil →</a>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    with st.container():
+        st.markdown(
+            f"""
+            <div style='background-color:#1e1e1e;padding:1em;border-radius:10px;color:white;text-align:center;'>
+                <img src="{player['picture']}" width="100" style="border-radius: 10px;" />
+                <h4>{player['name']}</h4>
+                <p>{player['team']}<br>{player['positions']} | {player['age']} ans</p>
+                <p>⭐ {player['overall_rating']}</p>
+            </div>
+            """, unsafe_allow_html=True
+        )
 
+        with st.expander("Voir plus"):
+            st.markdown(f"""
+            **Taille**: {player.get('height', 'N/A')} cm  
+            **Poids**: {player.get('weight', 'N/A')} kg  
+            **Pied préféré**: {player.get('foot', 'N/A')}  
+            **Potentiel**: {player.get('potential', 'N/A')}  
+            **Valeur marchande**: {player.get('market_value_m', 'N/A')} M€  
+            **Salaire**: {player.get('wage_k', 'N/A')} K€  
+            **Positionnement**: {player.get('best_position', 'N/A')}  
+            **Body type**: {player.get('body_type', 'N/A')}  
+            **Vitesse**: {player.get('sprint_speed', 'N/A')}
+            """)
 
-def display():  # <-- Ceci doit exister exactement avec ce nom
-    st.title("Liste des Joueurs")
+def display():
+    st.title("📋 Liste des Joueurs")
 
     df = load_players_data()
 
-    search = st.text_input("🔎 Rechercher un joueur")
-    if search:
-        df = df[df["Name"].str.contains(search, case=False, na=False)]
+    # --- Search bar and dropdown ---
+    st.subheader("🔎 Rechercher un joueur")
+    search = st.text_input("Tapez un nom de joueur")
+    player_names = df["name"].dropna().unique()
+    selected_from_list = st.selectbox("Ou sélectionnez depuis la liste :", [""] + sorted(player_names))
 
-    page_size = 10
+    if search:
+        df = df[df["name"].str.contains(search, case=False, na=False)]
+    elif selected_from_list:
+        df = df[df["name"] == selected_from_list]
+
+    # --- Pagination setup ---
+    page_size = 9
     if "player_page" not in st.session_state:
         st.session_state.player_page = 1
 
@@ -46,9 +58,16 @@ def display():  # <-- Ceci doit exister exactement avec ce nom
     end = start + page_size
     current_df = df.iloc[start:end]
 
-    for _, player in current_df.iterrows():
-        display_player_card(player)
+    # --- Display player cards in rows of 3 ---
+    for i in range(0, len(current_df), 3):
+        row = current_df.iloc[i:i + 3]
+        cols = st.columns(3)
+        for idx, player in enumerate(row.iterrows()):
+            with cols[idx]:
+                display_player_card(player[1])
 
+    # --- Pagination controls ---
+    st.markdown("---")
     col1, col2, col3 = st.columns([1, 2, 1])
     with col1:
         if st.session_state.player_page > 1:

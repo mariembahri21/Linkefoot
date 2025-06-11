@@ -1,0 +1,10 @@
+# Auto normalize all text files
+* text=auto
+
+# Keep notebooks using LF to avoid diff issues
+*.ipynb text eol=lf
+
+# Code files: normalize line endings
+*.py text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
