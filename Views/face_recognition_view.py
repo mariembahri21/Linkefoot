@@ -5,39 +5,39 @@ from PIL import Image
 from keras_facenet import FaceNet
 import joblib
 
-# Load model and embedder once
-def load_model_and_embedder():
+# Charger le modèle et l'extracteur d'embeddings une seule fois
+def charger_modele_et_embedder():
     embedder = FaceNet()
-    model = joblib.load("models/facial_recognition_svm.pkl")
-    return embedder, model
+    modele = joblib.load("models/facial_recognition_svm.pkl")
+    return embedder, modele
 
-embedder, model = load_model_and_embedder()
+embedder, modele = charger_modele_et_embedder()
 
 def display():
-    st.title("🧠 Facial Recognition: Identify Football Players")
-    st.markdown("Upload an image with a **clear front-facing face** to identify the football player.")
+    st.title("🧠 Reconnaissance Faciale : Identifier un Joueur de Football")
+    st.markdown("Téléversez une image avec un **visage bien visible de face** pour identifier le joueur.")
 
-    uploaded_file = st.file_uploader("📤 Upload an image", type=["jpg", "jpeg", "png"])
+    fichier_televerse = st.file_uploader("📤 Téléverser une image", type=["jpg", "jpeg", "png"])
 
-    if uploaded_file is not None:
-        # Show the uploaded image
-        image = Image.open(uploaded_file).convert("RGB")
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+    if fichier_televerse is not None:
+        # Afficher l'image téléversée
+        image = Image.open(fichier_televerse).convert("RGB")
+        st.image(image, caption="Image Téléversée", use_column_width=True)
 
-        # Convert to OpenCV format
+        # Conversion en format OpenCV
         img_cv = np.array(image)
         img_cv = cv2.cvtColor(img_cv, cv2.COLOR_RGB2BGR)
 
-        # Extract face and predict
-        faces = embedder.extract(img_cv, threshold=0.95)
+        # Extraire le visage et prédire
+        visages = embedder.extract(img_cv, threshold=0.95)
 
-        if not faces:
-            st.error("❌ No face detected. Please upload a clearer image.")
+        if not visages:
+            st.error("❌ Aucun visage détecté. Veuillez téléverser une image plus claire.")
         else:
-            embedding = faces[0]['embedding']
-            prediction = model.predict([embedding])[0]
-            proba = model.predict_proba([embedding])[0]
-            confidence = np.max(proba)
+            embedding = visages[0]['embedding']
+            prediction = modele.predict([embedding])[0]
+            proba = modele.predict_proba([embedding])[0]
+            confiance = np.max(proba)
 
-            st.success(f"✅ Identified: **{prediction}**")
-            st.write(f"Confidence: **{confidence*100:.2f}%**")
+            st.success(f"✅ Joueur identifié : **{prediction}**")
+            st.write(f"Confiance : **{confiance*100:.2f}%**")

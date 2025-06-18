@@ -1,10 +1,9 @@
-# similarity_view.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import os
 import joblib
+import json
 import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -13,9 +12,14 @@ def load_data_and_models():
     df = pd.read_csv(os.path.join("data", "clustered_players.csv"))
     scaler = joblib.load(os.path.join("models", "scaler.pkl"))
     pca = joblib.load(os.path.join("models", "pca.pkl"))
-    return df, scaler, pca
+    hdbscan_model = joblib.load(os.path.join("models", "hdbscan_model.pkl"))
+    
+    with open(os.path.join("models", "features_used.json")) as f:
+        features = json.load(f)
 
-# Find similar players
+    return df, scaler, pca, hdbscan_model, features
+
+# Find similar players using cosine similarity
 def find_similar_players(df, scaler, player_name, features, top_n=5):
     X_scaled = scaler.transform(df[features])
     idx = df[df['name'] == player_name].index[0]
@@ -24,7 +28,7 @@ def find_similar_players(df, scaler, player_name, features, top_n=5):
     similar_indices = np.argsort(similarities)[::-1][1:top_n+1]
     return df.loc[similar_indices, ['name', 'team', 'league', 'cluster']], similarities[similar_indices]
 
-# Radar plot between two players
+# Radar chart between two players
 def radar_plot(df, scaler, player1_name, player2_name, features):
     X_scaled = scaler.transform(df[features])
     idx1 = df[df['name'] == player1_name].index[0]
@@ -49,14 +53,11 @@ def radar_plot(df, scaler, player1_name, player2_name, features):
     ax.legend()
     return fig
 
-# Main display function
-def display():  # this must be named `display` for consistent navigation
+# Main display function for Streamlit
+def display():
     st.title("🔍 Analyse de Similarité des Joueurs")
 
-    df, scaler, pca = load_data_and_models()
-
-    features = ['age', 'overall_rating', 'p_goals', 'assists', 'expected_goals_(xg)',
-                'successful_dribbles', 'tackles', 'accurate_passes_%']
+    df, scaler, pca, hdbscan_model, features = load_data_and_models()
 
     player_names = df['name'].unique()
     selected_player = st.selectbox("Choisissez un joueur", sorted(player_names))

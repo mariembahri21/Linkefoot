@@ -16,4 +16,6 @@ venv/
 *.xlsx
 *.xls
 
+test.py
+
 

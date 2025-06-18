@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 def load_players_data():
-    file_path = os.path.join("data/cleaned/sofifa/sofifa_players_cleaned.xlsx")
+    file_path = os.path.join("data/cleaned/sofifa/sofifa_players.xlsx")
     return pd.read_excel(file_path)
 
 def display_player_card(player):
